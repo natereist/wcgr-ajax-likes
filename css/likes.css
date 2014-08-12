@@ -1,0 +1,21 @@
+/* Css to style it. */
+
+.wcgr-like-box{
+	float: right;
+	text-align: right;
+}
+.wcgr-like-box a{
+	margin-right: 5px;
+}
+.wcgr-like-box a:before{
+	content: '\f221';
+	-webkit-font-smoothing: antialiased;
+	display: inline-block;
+	font: normal 16px/1 Genericons;
+	text-decoration: none;
+	margin-right: 5px;
+	vertical-align: text-bottom;
+}
+.clear{
+	clear: both;
+}
