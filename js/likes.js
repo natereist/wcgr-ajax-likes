@@ -1,4 +1,5 @@
 jQuery( document ).ready(function( $ ){
+	
 	$('a.like-this-post').each(function (){
 		
 		var post = $(this).data( 'post_id' );
@@ -7,7 +8,8 @@ jQuery( document ).ready(function( $ ){
 		if( typeof liked_cookie != 'undefined' ){
 			$(this).text( 'Liked' ).addClass( 'liked' );;
 		}
-	})
+	});
+	
 	$('body').on('click', 'a.like-this-post', function(){
 		var post = $(this).data( 'post_id' );
 		
