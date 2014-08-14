@@ -60,7 +60,7 @@
 			
 			//	appends our like box ot the content on a single post.
 			public function like_post_template( $content ){
-				if( in_the_loop() ){
+				if( in_the_loop() && is_single() ){
 					ob_start();
 					
 					include_once( WCGR_LIKES_PATH . 'templates/like_box.php' );
