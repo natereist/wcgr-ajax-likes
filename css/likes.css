@@ -4,9 +4,25 @@
 	float: right;
 	text-align: right;
 }
+
+
 .wcgr-like-box a{
 	margin-right: 5px;
+	line-height: 1px;
+	color: #fff;
+	display: inline-block;
+	padding: 5px;
+	background: #ccc;
+	text-decoration: none !important;
+	border-radius:5px;
 }
+
+
+.wcgr-like-box a.liked,
+.wcgr-like-box a:hover{
+	background: #333;
+}
+
 .wcgr-like-box a:before{
 	content: '\f221';
 	-webkit-font-smoothing: antialiased;

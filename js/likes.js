@@ -1,4 +1,13 @@
 jQuery( document ).ready(function( $ ){
+	$('a.like-this-post').each(function (){
+		
+		var post = $(this).data( 'post_id' );
+		
+		var liked_cookie = $.cookie( 'liked_post_' + post );
+		if( typeof liked_cookie != 'undefined' ){
+			$(this).text( 'Liked' ).addClass( 'liked' );;
+		}
+	})
 	$('body').on('click', 'a.like-this-post', function(){
 		var post = $(this).data( 'post_id' );
 		
@@ -15,6 +24,7 @@ jQuery( document ).ready(function( $ ){
 			
 			$.post( ajax_data.ajax_url, data, function( response ){
 				$('span#count-' + response.post_liked ).text( response.like_count );
+				$('a#like-' + response.post_liked ).text( 'Liked' ).addClass( 'liked' );
 			}, 'JSON' );
 		}
 		else{

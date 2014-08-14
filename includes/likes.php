@@ -1,10 +1,12 @@
 <?php 
 	
 	if( !class_exists( 'WCGR_Likes' ) ){
+	
 		class WCGR_Likes{
 			
 			//set up hooks and filters
 			public function __construct(){
+			
 				add_action( 'wp_ajax_like_button_process', array( $this, 'process_like'), 10, 1 );
 				add_action( 'wp_ajax_nopriv_like_button_process', array( $this, 'process_like'), 10, 1 );
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_like_scripts'), 10, 1 );
@@ -13,16 +15,18 @@
 				add_filter( 'the_content', array( $this, 'like_post_template' ), 20, 1 );
 			}
 			
-			// enqueue data
+			// enqueue scripts, styles and data
 			public function enqueue_like_scripts(){
 				wp_enqueue_script( 'jquery-cookie', plugins_url( '../js/jquery.cookie.js', __FILE__ ), array( 'jquery' ) );
 				wp_enqueue_script( 'wcgr_like_post', plugins_url( '../js/likes.js', __FILE__ ), array( 'jquery', 'jquery-cookie' ) );
-				wp_enqueue_style( 'wcgr_like_post', plugins_url( '../css/likes.css', __FILE__ ) );
+				wp_enqueue_style( 'wcgr_like_post_genericons', plugins_url( '../css/genericons.css', __FILE__ ) );
+				wp_enqueue_style( 'wcgr_like_post', plugins_url( '../css/likes.css', __FILE__ ), array( 'wcgr_like_post_genericons' ) );
 				
 				$object_for_js = array(
 					'ajax_url' => admin_url( '/admin-ajax.php' ),
 					'nonce' => wp_create_nonce('like_post')
 				);
+				
 				wp_localize_script( 'wcgr_like_post', 'ajax_data', $object_for_js );
 			}
 			
@@ -54,8 +58,9 @@
 				<?php
 			}
 			
+			//	appends our like box ot the content on a single post.
 			public function like_post_template( $content ){
-				if( in_the_loop() && is_single() ){
+				if( in_the_loop() ){
 					ob_start();
 					
 					include_once( WCGR_LIKES_PATH . 'templates/like_box.php' );
@@ -67,7 +72,7 @@
 				return $content;
 			}
 			
-			// adds our meta box
+			// adds the meta box
 			public function add_like_meta_box( $post ){
 				add_meta_box('like-count-meta-box', 'Likes', array( $this, 'like_meta_box' ), 'post', 'side', 'high' );
 			}
