@@ -32,7 +32,23 @@
 			
 			// ajax callback
 			public function process_like(){
-				
+				if ( isset( $_POST['like_nonce'] ) ) {
+					$nonce = $_POST['like_nonce'];
+					
+					if ( wp_verify_nonce($nonce, 'like_post') ) {
+						
+						// process the like here
+						$post_to_like = $_POST['post_to_like'];
+						$count = get_post_meta( $post_to_like, 'like_count', 1 );
+						
+						$count += 1;
+						
+						update_post_meta( $post_to_like, 'like_count', $count );
+						
+						wp_send_json( array( 'like_count' => $count, 'post_liked' => $post_to_like ) );
+						
+					}
+				}
 			}
 			
 			// out puts the meta box content
