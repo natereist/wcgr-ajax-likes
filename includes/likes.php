@@ -17,7 +17,17 @@
 			
 			// enqueue scripts, styles and data
 			public function enqueue_like_scripts(){
+				wp_enqueue_script( 'jquery-cookie', plugins_url( '../js/jquery.cookie.js', __FILE__ ), array( 'jquery' ) );
+				wp_enqueue_script( 'wcgr_like_post', plugins_url( '../js/likes.js', __FILE__ ), array( 'jquery', 'jquery-cookie' ) );
+				wp_enqueue_style( 'wcgr_like_post_genericons', plugins_url( '../css/genericons.css', __FILE__ ) );
+				wp_enqueue_style( 'wcgr_like_post', plugins_url( '../css/likes.css', __FILE__ ), array( 'wcgr_like_post_genericons' ) );
 				
+				$object_for_js = array(
+					'ajax_url' => admin_url( '/admin-ajax.php' ),
+					'nonce' => wp_create_nonce('like_post')
+				);
+				
+				wp_localize_script( 'wcgr_like_post', 'ajax_data', $object_for_js );
 			}
 			
 			// ajax callback
