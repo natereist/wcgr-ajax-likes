@@ -7,6 +7,12 @@
 			//set up hooks and filters
 			public function __construct(){
 			
+				add_action( 'wp_ajax_like_button_process', array( $this, 'process_like'), 10, 1 );
+				add_action( 'wp_ajax_nopriv_like_button_process', array( $this, 'process_like'), 10, 1 );
+				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_like_scripts'), 10, 1 );
+				add_action( 'add_meta_boxes_post', array( $this, 'add_like_meta_box'), 10, 1 );
+				
+				add_filter( 'the_content', array( $this, 'like_post_template' ), 20, 1 );
 			}
 			
 			// enqueue scripts, styles and data
